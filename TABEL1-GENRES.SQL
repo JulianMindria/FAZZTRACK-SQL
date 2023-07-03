@@ -15,4 +15,6 @@
 --     ('Animation'),
 --     ('Mystery');
 
-SELECT * FROM genres
+-- SELECT * FROM genres
+
+DROP TABLE genres

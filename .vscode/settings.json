@@ -5,19 +5,9 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "webgo",
-            "database": "webgolang",
-            "username": "webgo",
-            "password": "12345678"
-        },
-        {
-            "previewLimit": 50,
-            "server": "localhost",
-            "port": 5432,
-            "driver": "PostgreSQL",
-            "name": "belajarsql",
-            "database": "belajarsql",
-            "username": "yandoko",
+            "name": "backend_api",
+            "database": "tickitz",
+            "username": "backendgo",
             "password": "12345678"
         }
     ]
