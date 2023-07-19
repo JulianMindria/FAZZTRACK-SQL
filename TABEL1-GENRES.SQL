@@ -17,4 +17,4 @@
 
 -- SELECT * FROM genres
 
-DROP TABLE genres
+-- DROP TABLE genres

@@ -1,11 +1,11 @@
 -- CREATE TABLE USERS (
 --     user_id SERIAL NOT NULL,
---     first_name varchar NOT NULL,
---     last_name varchar NOT NULL,
+--     username varchar NOT NULL,
 --     "password" varchar NOT NULL,
 --     roles varchar NOT NULL DEFAULT 'user',
 --     phone VARCHAR NOT NULL,
 --     email varchar NOT NULL,
+--     user_image varchar NULL,
 --     created_at timestamp without time zone NULL DEFAULT NOW(),
 --     updated_at timestamp without time zone NULL,
 --     constraint pk_users PRIMARY key (user_id)
@@ -17,14 +17,17 @@
 -- SELECT * FROM users
 -- SELECT * FROM public.users WHERE username LIKE ''
 
--- INSERT INTO USERS (first_name, last_name, password, phone, email)
+-- INSERT INTO USERS (username, password, phone, email, roles)
 -- VALUES
---     ('julian', 'mindria', '12345678', '081234567890', 'miaja@gmail.com')
+--     ('mindria', '12345678', '081234567890', 'miaja@gmail.com', 'admin')
 
 -- DROP TABLE users
 
--- DELETE FROM users WHERE user_id = 5;
--- DELETE FROM users WHERE user_id = 6;
+-- UPDATE users SET roles='admin' WHERE user_id='3'
+-- DELETE FROM users WHERE user_id = 3;
 
 
+-- UPDATE users SET user_image = 'https://res.cloudinary.com/dzinbpitv/image/upload/v1688997004/xfkx5xakqctbiitzhzes.jpg' WHERE user_id='3'
+-- UPDATE users SET user_image = 'https://res.cloudinary.com/dzinbpitv/image/upload/v1688995333/pcwd7ewtsxdiviezzqpj.jpg' WHERE user_id='2';
+-- UPDATE users SET user_image = 'https://res.cloudinary.com/dzinbpitv/image/upload/v1688995420/wtidxnp0k9vfutqdxrzv.jpg' WHERE user_id='1';
 

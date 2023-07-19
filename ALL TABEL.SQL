@@ -10,8 +10,7 @@
 --   CONSTRAINT pk_movie PRIMARY KEY (movie_id)
 -- );
 
-
--- INSERT INTO movies (title, synopsis,movie_banner, date_released, duration, director, casts, genre_id)
+-- INSERT INTO movies (title, synopsis,movie_banner, date_released, duration, director, casts)
 -- VALUES
 -- ('Four Rooms','It''s Ted the Bellhop''s first night on the job...and the hotel''s very unusual guests are about to place him in some outrageous predicaments. It seems that this evening''s room service is serving up one unbelievable happening after another.', 'https://res.cloudinary.com/dzinbpitv/image/upload/v1688244759/wnnzeoiptxmpvpvyzacs.jpg','1995-12-09', 98, 'Quentin Tarantino', 'Tim Roth, Antonio Banderas, Sammi Davis'),
 -- ('Star Wars','Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.','https://res.cloudinary.com/dzinbpitv/image/upload/v1688245024/bois5grcchvajj3lkrbs.jpg','1977-05-25', 100, 'J.J Abrams','Mark Hamill, Harrison Ford'),
@@ -23,52 +22,60 @@
 -- ('My Life Without Me','A Pedro Almodovar production in which a fatally ill mother with only two months to live creates a list of things she wants to do before she dies with out telling her family of her illness.', 'https://res.cloudinary.com/dzinbpitv/image/upload/v1688245015/ysjjutefhqlceg4mg2vd.jpg', '2003-03-07',112,'Isabel Coixet','Sarah Polley, Scott Speedman, Mark Ruffalo')
 
 
--- QUERY MOVIE DATE
--- SELECT to_char(movies.date_released,'Month DD, YYYY') FROM movies
+
+-- CREATE TABLE genres (
+-- 	genre_id serial NOT NULL,
+-- 	genre_name varchar NOT NULL,
+-- 	created_at timestamp without time zone NULL DEFAULT now(),
+-- 	updated_at timestamp without time zone NULL,
+-- 	CONSTRAINT genre_pk PRIMARY KEY (genre_id),
+-- 	CONSTRAINT genre_un UNIQUE (genre_name)
+-- );
+
+
+-- INSERT INTO public.genres (genre_name) VALUES
+--     ('Action'),
+--     ('Comedy'),
+--     ('Drama'),
+--     ('Horror'),
+--     ('Romance'),
+--     ('Thriller'),
+--     ('Sci-Fi'),
+--     ('Adventure'),
+--     ('Animation'),
+--     ('Mystery');
+
+
+-- CREATE TABLE genreName (
+-- 	movie_genre_id serial NOT NULL,
+-- 	movie_id int NOT NULL,
+-- 	genre_id int NOT NULL,
+-- 	CONSTRAINT movie_genre_pk PRIMARY KEY (movie_genre_id),
+-- 	CONSTRAINT movie_genre_fk FOREIGN KEY (movie_id) REFERENCES public.movies(movie_id) ON DELETE CASCADE,
+-- 	CONSTRAINT movie_genre_fk_1 FOREIGN KEY (genre_id) REFERENCES public.genres(genre_id) ON DELETE CASCADE
+-- );
+
+
+-- INSERT into genreName (movie_id, genre_id)
+-- VALUES (1,2),(1,1),(1,5),(2,3),(2,6),(2,4),(3,1),(3,2),(3,7),(4,1),(4,5),(5,7),(5,6),(6,9),(6,4),(7,1),(7,4),(8,9),(8,6),(8,5)
+
+
+SELECT 
+    mv.movie_id,
+    mv.synopsis,
+    mv.movie_banner,
+    mv.title,
+    mv.casts,
+    mv.director,
+    string_agg(g.genre_name, ', ') AS genre,
+    mv.duration,
+    mv.date_released
+FROM public.movies mv
+JOIN public.genreName gm ON gm.movie_id = mv.movie_id
+JOIN public.genres g ON gm.genre_id = g.genre_id
+GROUP BY mv.movie_id
+
+-- SELECT COUNT(movie_id) as "count" FROM public.movies WHERE true and genre_name='Drama'
 
 -- SELECT * FROM movies
 
--- DROP TABLE movies;
--- DROP TABLE movie_genre;
--- DROP TABLE genre;
-
-
--- SELECT 
---     mv.movie_id,
---     mv.synopsis,
---     mv.movie_banner,
---     mv.title,
---     mv.casts,
---     mv.director,
---     mv.duration,
---     mv.date_released,
---     mv.genre_id
--- FROM public.movies mv
--- WHERE true AND genre_id LIKE '%Drama%'
--- GROUP BY mv.movie_id
-
-            -- SELECT 
-            --     mv.movie_id,
-            --     mv.synopsis,
-            --     mv.movie_banner,
-            --     mv.title,
-            --     mv.casts,
-            --     mv.director,
-            --     mv.duration,
-            --     mv.date_released
-            -- FROM public.movies mv
-
-            -- SELECT 
-            --     mv.movie_id,
-            --     mv.synopsis,
-            --     mv.movie_banner,
-            --     mv.title,
-            --     mv.casts,
-            --     mv.director,
-            --     string_agg(g.genre_name, ', ') AS genres,
-            --     mv.duration,
-            --     mv.date_released
-            -- FROM public.movies mv
-            -- JOIN public.movie_genre mg ON mg.movie_id = mv.movie_id
-            -- JOIN public.genre g ON mg.genre_id = g.genre_id
-            -- GROUP BY mv.movie_id
